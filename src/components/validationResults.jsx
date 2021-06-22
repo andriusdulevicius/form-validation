@@ -5,7 +5,15 @@ class ValidationResults extends Component {
   render() {
     return (
       <div className='results'>
-        <h2>results</h2>
+        {this.props.errors ? (
+          <p>
+            <i style={{ color: 'tomato' }} className='fa fa-close'></i> Passwords do not match
+          </p>
+        ) : (
+          <p>
+            <i style={{ color: 'green' }} className='fa fa-check'></i> Passwords match
+          </p>
+        )}
       </div>
     );
   }

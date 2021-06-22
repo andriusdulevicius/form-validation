@@ -50,7 +50,9 @@ class MainForm extends Component {
     if (result.error) {
       this.setState({ errors: { ...this.state.errors, [name]: result.error.details[0].message } });
     } else {
-      this.setState({ errors: { ...this.state.errors, [name]: '' } });
+      const errorsCopy = { ...this.state.errors };
+      delete errorsCopy[name];
+      this.setState({ errors: errorsCopy });
     }
   };
 
@@ -78,7 +80,11 @@ class MainForm extends Component {
     this.setState({ account: { ...this.state.account, agreement: e.target.checked } });
   };
 
-  addNewAccount = () => {};
+  passProps = () => {
+    if (this.state.errors.password) return true;
+    if (this.state.errors.repeatPassword) return true;
+    return false;
+  };
 
   render() {
     const { account, errors, errorMessages } = this.state;
@@ -137,7 +143,7 @@ class MainForm extends Component {
             </div>
             <button className='submit'>Submit</button>
           </form>
-          <ValidationResults />
+          <ValidationResults errors={this.passProps} />
         </div>
       </div>
     );
