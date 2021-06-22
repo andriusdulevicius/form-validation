@@ -38,6 +38,17 @@ class MainForm extends Component {
     // }
   };
 
+  validateProperty = (name, value) => {
+    const obj = { [name]: value };
+    const schema = { [name]: this.schema[name] };
+    const result = Joi.validate(obj, schema);
+    if (result.error) {
+      this.setState({ errors: { ...this.state.errors, [name]: result.error.details[0].message } });
+    } else {
+      this.setState({ errors: { ...this.state.errors, [name]: '' } });
+    }
+  };
+
   handlesubmit = (e) => {
     e.preventDefault();
     this.setState({ errors: '' });
@@ -47,7 +58,9 @@ class MainForm extends Component {
   };
 
   syncInput = (e) => {
-    this.setState({ account: { ...this.state.account, [e.target.name]: e.target.value } });
+    const { name, value } = e.target;
+    this.setState({ account: { ...this.state.account, [name]: value } });
+    this.validateProperty(name, value);
   };
 
   handleChecked = (e) => {
