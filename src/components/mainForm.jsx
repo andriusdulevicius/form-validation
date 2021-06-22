@@ -5,6 +5,10 @@ class MainForm extends Component {
   state = {
     account: { username: '', email: '', password: '', repeatPassword: '', agreement: '' },
     errors: {},
+    errorMessages: {
+      agreement: 'Please confirm our terms and conditions',
+      repeatPassword: 'Password must match!',
+    },
   };
 
   //validacijos schema
@@ -49,9 +53,14 @@ class MainForm extends Component {
     }
   };
 
-  handlesubmit = (e) => {
-    e.preventDefault();
+  resetErrors = () => {
+    this.state.account.agreement === false && this.setState({ account: { ...this.state.account, agreement: '' } });
     this.setState({ errors: '' });
+  };
+
+  handlesubmit = async (e) => {
+    e.preventDefault();
+    await this.resetErrors();
     this.validateForm();
 
     // this.setState({ account: { username: '', email: '', password: '', repeatPassword: '', agreement: false } });
@@ -71,7 +80,7 @@ class MainForm extends Component {
   addNewAccount = () => {};
 
   render() {
-    const { account, errors } = this.state;
+    const { account, errors, errorMessages } = this.state;
     return (
       <div className='main-form'>
         <h1>Main form</h1>
@@ -111,7 +120,7 @@ class MainForm extends Component {
             name='repeatPassword'
             placeholder='Repeat your password'
           />
-          {errors.repeatPassword && <p className='error-msg'>{errors.repeatPassword}</p>}
+          {errors.repeatPassword && <p className='error-msg'>{errorMessages.repeatPassword}</p>}
           <div>
             <input
               className={errors.agreement && 'is-invalid checkbox'}
@@ -122,7 +131,7 @@ class MainForm extends Component {
               name='agreement'
             ></input>
             <label htmlFor='agreement'>Agree to our terms and conditions</label>
-            {errors.agreement && <p className='error-msg'>{errors.agreement}</p>}
+            {errors.agreement && <p className='error-msg'>{errorMessages.agreement}</p>}
           </div>
           <button className='submit'>Submit</button>
         </form>
