@@ -3,13 +3,25 @@ import React, { Component } from 'react';
 class MainForm extends Component {
   state = {
     account: { username: '', email: '', password: '', repeatPassword: '', agreement: false },
+    errors: {},
+  };
+
+  validateForm = () => {
+    if (this.state.account.username.length === 0) {
+      this.setState({ errors: { username: 'Cannot be blank' } });
+      return;
+    }
+    if (this.state.account.username.length < 4) {
+      this.setState({ errors: { username: 'Must be more than 3 chars long.' } });
+    }
   };
 
   handlesubmit = (e) => {
     e.preventDefault();
-    this.addNewAccount(this.state.newNote);
+    this.setState({ errors: '' });
+    this.validateForm();
 
-    this.setState({ account: { username: '', email: '', password: '', repeatPassword: '', agreement: false } });
+    // this.setState({ account: { username: '', email: '', password: '', repeatPassword: '', agreement: false } });
   };
 
   syncInput = (e) => {
@@ -23,7 +35,7 @@ class MainForm extends Component {
   addNewAccount = () => {};
 
   render() {
-    const { account } = this.state;
+    const { account, errors } = this.state;
     return (
       <div className='main-form'>
         <h1>Main form</h1>
@@ -33,8 +45,10 @@ class MainForm extends Component {
             onChange={this.syncInput}
             type='text'
             name='username'
+            className={errors.username && 'is-invalid'}
             placeholder='Enter Username'
           />
+          {errors.username && <p className='error-msg'>{errors.username}</p>}
           <input value={account.email} onChange={this.syncInput} type='text' name='email' placeholder='Enter email' />
           <input
             value={account.password}

@@ -21,3 +21,17 @@
   width: 150px;
   cursor: pointer;
 }
+
+.is-invalid {
+  border-color: rgb(247, 88, 88);
+  background-color: rgba(250, 149, 149, 0.438);
+}
+
+.error-msg {
+  font-size: 0.6rem;
+  color: snow;
+  background-color: rgba(250, 149, 149, 0.986);
+  margin-top: -1.2em;
+  padding: 0.3em;
+  border-radius: 5px;
+}
