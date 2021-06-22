@@ -39,3 +39,8 @@
 .checkbox {
   margin-bottom: 1rem;
 }
+
+.flex {
+  display: flex;
+  gap: 1.5em;
+}
