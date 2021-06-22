@@ -143,7 +143,7 @@ class MainForm extends Component {
             </div>
             <button className='submit'>Submit</button>
           </form>
-          <ValidationResults errors={this.passProps} />
+          <ValidationResults errors={this.passProps()} />
         </div>
       </div>
     );
